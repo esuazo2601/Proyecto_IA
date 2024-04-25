@@ -13,7 +13,7 @@ de estos algoritmos implementados para evaluar su eficiencia.
 * Preliminarmente se tiene pensado implementar y comparar los algoritmos:
 
 Búsqueda no informada: BFS y DFS.
-Búsqueda no informada: A* y UCS. 
+Búsqueda informada: A* y UCS. 
 Aprendizaje por refuerzo: Q-Learning.
 
 ## Caracterización del problema a resolver
