@@ -5,7 +5,8 @@
 * Esteban Suazo
 
 ## ¿En qúe consiste el proyecto?
-* Consistirá en el uso de varios algoritmos de búsqueda implementados en el contexto de encontrar un camino hasta llegar a la casilla de destino
+* Consistirá en el uso de varios algoritmos de búsqueda y de aprendizaje por refuerzo, 
+implementados en el contexto de encontrar un camino hasta llegar a la casilla de destino
 intentando evitar por el camino los obstáculos presentes (en este caso los pozos de hielo). De esta forma se pretende medir el desmepeño
 de estos algoritmos implementados para evaluar su eficiencia.
 
