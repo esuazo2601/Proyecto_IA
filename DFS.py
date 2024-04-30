@@ -1,5 +1,3 @@
-# DFS.py
-
 def dfs(matrix, start, end):
     stack = [(start, [start])]
     visited = set()
