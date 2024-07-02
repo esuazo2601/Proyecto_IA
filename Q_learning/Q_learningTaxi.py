@@ -28,6 +28,9 @@ def run(episodes):
     rewards_per_episode = np.zeros(episodes)
 
     for episode in range(episodes):
+        if episode == 800:
+            env.close()
+            env = gym.make('Taxi-v3', render_mode='human')  
         state = env.reset()[0]  # Obtener el estado del diccionario
         terminated = False      # True si el agente cae en una obstaculo
         truncated = False       # True cuando hay > 200 acciones
