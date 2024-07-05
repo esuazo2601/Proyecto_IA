@@ -3,8 +3,9 @@ from A_star import A_star,get_instructions
 import time as t
 import matplotlib.pyplot as plt
 from gymnasium.envs.toy_text.frozen_lake import generate_random_map
+import time
 
-env = gym.make('FrozenLake-v1', desc=generate_random_map(100), is_slippery=True, render_mode=None)
+env = gym.make('FrozenLake-v1', desc=generate_random_map(100), is_slippery=False, render_mode=None)
 env_desc = env.get_wrapper_attr('desc')
 
 # Extraer la matriz del nivel
@@ -32,6 +33,8 @@ score = 0
 
 rewards = []
 episodes = 100
+
+start = time.time()
 for episode in range(episodes):
     while not done:
         #env.render()
@@ -42,14 +45,17 @@ for episode in range(episodes):
     rewards.append(score)
     env.close()
 
-print(rewards)
+end = time.time()
+print("TOTAL TIME FROZEN", (end-start))
+
+
+# print(rewards)
 plt.plot(rewards)
 plt.xlabel('Episodios')
 plt.ylabel('Recompensas Acumuladas')
 plt.title('Recompensas Acumuladas en FrozenLake')
 plt.savefig('frozen_ASTAR_slippery.png')
 plt.show()
-
 
 if path:
     print("Camino encontrado A STAR:", path)

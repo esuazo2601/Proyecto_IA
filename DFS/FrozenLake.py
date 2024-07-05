@@ -3,8 +3,9 @@ from DFS import dfs, get_instructions
 import time as t
 import matplotlib.pyplot as plt
 from gymnasium.envs.toy_text.frozen_lake import generate_random_map
+import time
 
-env = gym.make('FrozenLake-v1', desc = generate_random_map(100), is_slippery=True, render_mode=None)
+env = gym.make('FrozenLake-v1', desc = generate_random_map(100), is_slippery=False, render_mode=None)
 env_desc = env.get_wrapper_attr('desc')
 
 # Extraer la matriz del nivel
@@ -28,6 +29,8 @@ steps = get_instructions(path)
 num_episodes = 100
 rewards_per_episode = []
 
+
+start = time.time()
 for episode in range(num_episodes):
     done = False
     stats, info = env.reset()
@@ -46,6 +49,8 @@ for episode in range(num_episodes):
 
 env.close()
 
+end = time.time()
+print("TOTAL TIME FROZEN", (end-start))
 # Graficar las recompensas acumuladas por episodio
 plt.plot(rewards_per_episode)
 plt.xlabel('Episodios')
@@ -53,7 +58,7 @@ plt.ylabel('Recompensas Acumuladas')
 plt.title('Recompensas Acumuladas en FrozenLake')
 plt.savefig('frozen_dfs_slippery.png')
 
-if path:
-    print("Camino encontrado:", path)
-else:
-    print("No se encontró camino.")
+#if path:
+#    print("Camino encontrado:", path)
+#else:
+#    print("No se encontró camino.")

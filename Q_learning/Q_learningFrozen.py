@@ -3,9 +3,10 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 from gymnasium.envs.toy_text.frozen_lake import generate_random_map
+import time
 
 # Inicializar la tabla Q con ceros
-Q = np.zeros((1000*1000, 4))
+Q = np.zeros((100*100, 4))
 
 # Elegir una acción usando la estrategia epsilon-greedy
 def choose_action(state, epsilon):
@@ -16,7 +17,7 @@ def choose_action(state, epsilon):
 
 def run(episodes):
 
-    env = gym.make('FrozenLake-v1', desc = generate_random_map(size=1000), is_slippery=False, render_mode=None)
+    env = gym.make('FrozenLake-v1', desc = generate_random_map(size=100), is_slippery=True, render_mode=None)
 
     alpha = 0.9  # Tasa de aprendizaje
     gamma = 0.9  # Tasa de descuento
@@ -27,6 +28,8 @@ def run(episodes):
     rewards_per_episode = np.zeros(episodes)
     goal_state = 63  # Estado objetivo para una cuadrícula de 8x8
 
+
+    start = time.time()
     for episode in range(episodes):
         state = env.reset()[0]  # Obtener el estado inicial
         terminated = False
@@ -57,6 +60,9 @@ def run(episodes):
         rewards_per_episode[episode] = total_reward
 
     env.close()
+
+    end = time.time()
+    print("TOTAL TIME FROZEN", (end-start))
 
     # Calcular recompensas acumuladas para los últimos 100 episodios
     sum_rewards = np.zeros(episodes)
