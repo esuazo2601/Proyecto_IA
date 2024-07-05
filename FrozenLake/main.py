@@ -1,5 +1,6 @@
 import gymnasium as gym
 from DFS import dfs,get_instructions
+from A_star import A_star
 import time as t
 
 env = gym.make('FrozenLake-v1', map_name="4x4", is_slippery=False, render_mode="human")
@@ -33,11 +34,30 @@ while not done:
         t.sleep(0.5)
         n_state,reward,done,truncated,info = env.step(action)
         score += reward
-env.close()
-
-
 
 if path:
-    print("Camino encontrado:", path)
+    print("Camino encontrado DFS:", path)
+else:
+    print("No se encontró camino.")
+
+# Ejecución de A Star
+path = A_star(level_matrix, start, end)
+steps = get_instructions(path)
+#print(steps)
+
+done=False
+stats,info = env.reset()
+score = 0
+
+while not done:
+    env.render()
+    for action in steps:
+        t.sleep(0.5)
+        n_state,reward,done,truncated,info = env.step(action)
+        score += reward
+env.close()
+
+if path:
+    print("Camino encontrado A STAR:", path)
 else:
     print("No se encontró camino.")
