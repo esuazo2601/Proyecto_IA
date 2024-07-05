@@ -2,9 +2,10 @@ import gymnasium as gym
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+from gymnasium.envs.toy_text.frozen_lake import generate_random_map
 
 # Inicializar la tabla Q con ceros
-Q = np.zeros((64, 4))
+Q = np.zeros((1000*1000, 4))
 
 # Elegir una acción usando la estrategia epsilon-greedy
 def choose_action(state, epsilon):
@@ -15,7 +16,7 @@ def choose_action(state, epsilon):
 
 def run(episodes):
 
-    env = gym.make('FrozenLake-v1', map_name="8x8", is_slippery=False, render_mode=None)
+    env = gym.make('FrozenLake-v1', desc = generate_random_map(size=1000), is_slippery=False, render_mode=None)
 
     alpha = 0.9  # Tasa de aprendizaje
     gamma = 0.9  # Tasa de descuento
@@ -70,4 +71,4 @@ def run(episodes):
     plt.savefig('frozen.png')
 
 if __name__ == '__main__':
-    run(2000)
+    run(20000)

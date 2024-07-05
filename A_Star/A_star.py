@@ -82,3 +82,21 @@ def get_neighbors(matrix, grilla, celda):
                 neighbors.append(grilla[neighbor_row][neighbor_col])
 
     return neighbors
+
+def get_instructions (path:list[tuple[int,int]]):
+    steps = []
+    for i in range(1, len(path)):
+        # Obtener el punto actual y el punto anterior
+        punto_anterior = path[i-1]
+        punto_actual = path[i]
+        
+        # Comparar las coordenadas para determinar la dirección del movimiento
+        if punto_actual[0] < punto_anterior[0]:
+            steps.append(3)
+        elif punto_actual[0] > punto_anterior[0]:
+            steps.append(1)
+        elif punto_actual[1] < punto_anterior[1]:
+            steps.append(0)
+        elif punto_actual[1] > punto_anterior[1]:
+            steps.append(2)
+    return steps
