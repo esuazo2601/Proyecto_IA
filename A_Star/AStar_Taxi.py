@@ -2,13 +2,13 @@ import heapq
 import gymnasium as gym
 import numpy as np
 import matplotlib.pyplot as plt
-from gymnasium.envs.toy_text.taxi import TaxiEnv
+import time
 
 def manhattan_distance(start, goal):
     return abs(start[0] - goal[0]) + abs(start[1] - goal[1])
 
-def a_star(env, start_state, TE):
-    taxi_row, taxi_col, passenger, dest = TE.unwrapped.decode(start_state)
+def a_star(env, start_state):
+    taxi_row, taxi_col, passenger, dest = env.unwrapped.decode(start_state)
 
     # Priority queue for A* (cost, current state, path, passenger picked)
     priority_queue = []
@@ -24,7 +24,7 @@ def a_star(env, start_state, TE):
         
         visited.add(state)
         
-        taxi_row, taxi_col, passenger, dest = TE.unwrapped.decode(state)
+        taxi_row, taxi_col, passenger, dest = env.unwrapped.decode(state)
 
         # If the passenger is picked up and we're at the destination, drop off the passenger
         if passenger_picked and (taxi_row == env.locs[dest][0] and taxi_col == env.locs[dest][1]):
@@ -46,7 +46,7 @@ def a_star(env, start_state, TE):
         for action in range(4):
             env.unwrapped.s = state  # Restore state
             next_state, _, _, _, _ = env.step(action)
-            next_taxi_row, next_taxi_col, _, _ = TE.unwrapped.decode(next_state)
+            next_taxi_row, next_taxi_col, _, _ = env.unwrapped.decode(next_state)
 
             if passenger_picked:
                 heuristic = manhattan_distance((next_taxi_row, next_taxi_col), env.locs[dest])
@@ -60,15 +60,14 @@ def a_star(env, start_state, TE):
 
 def run_a_star(episodes):
     env = gym.make('Taxi-v3')
-    TE = TaxiEnv()
 
     rewards_per_episode = np.zeros(episodes)
     
     for episode in range(episodes):
         initial_state = env.reset()[0]  # Obtain initial state
-        path, reward = a_star(env, initial_state, TE)
+        path, reward = a_star(env, initial_state)
         
-        # # Muestra el camino encontrado para el modo humano
+        # # Muestra el camino encontrado para el modo humano (opcional)
         # if path:
         #     env = gym.make('Taxi-v3', render_mode='human')
         #     env.reset()
@@ -88,4 +87,7 @@ def run_a_star(episodes):
     plt.savefig('taxi_a_star.png')
 
 if __name__ == '__main__':
+    start = time.time()
     run_a_star(1000)
+    end = time.time()
+    print("TIME: ",(end-start))

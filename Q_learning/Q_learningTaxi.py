@@ -2,6 +2,7 @@ import gymnasium as gym
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+import time
 
 # Espacio de observación = 500
 # 6 acciones posibles (arriba, abajo, izquierda, derecha, pickup, drop)
@@ -28,9 +29,9 @@ def run(episodes):
     rewards_per_episode = np.zeros(episodes)
 
     for episode in range(episodes):
-        if episode == 800:
-            env.close()
-            env = gym.make('Taxi-v3', render_mode='human')  
+        # if episode == 800:
+        #     env.close()
+        #     env = gym.make('Taxi-v3', render_mode='human')  
         state = env.reset()[0]  # Obtener el estado del diccionario
         terminated = False      # True si el agente cae en una obstaculo
         truncated = False       # True cuando hay > 200 acciones
@@ -53,12 +54,15 @@ def run(episodes):
 
     env.close()
 
-    sum_rewards = np.zeros(episodes)
-    for t in range(episodes):
-        sum_rewards[t] = np.sum(rewards_per_episode[max(0, t-100):(t+1)])
-    plt.plot(sum_rewards)
-    plt.savefig('taxi.png')
+    # sum_rewards = np.zeros(episodes)
+    # for t in range(episodes):
+    #     sum_rewards[t] = np.sum(rewards_per_episode[max(0, t-100):(t+1)])
+    # plt.plot(sum_rewards)
+    # plt.savefig('taxi.png')
 
 
 if __name__ == '__main__':
+    start = time.time()
     run(1000)
+    end = time.time()
+    print("TIME: ",(end-start))

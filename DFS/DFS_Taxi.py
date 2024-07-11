@@ -2,6 +2,7 @@ import gymnasium as gym
 import numpy as np
 import matplotlib.pyplot as plt
 from gymnasium.envs.toy_text.taxi import TaxiEnv
+import time
 
 def dfs(env, state, visited, path, passenger_picked, TE):
     # Decode the current state
@@ -76,4 +77,8 @@ def run_dfs(episodes):
     plt.savefig('taxi_dfs.png')
 
 if __name__ == '__main__':
-    run_dfs(1)
+    start = time.time()
+    run_dfs(1000)
+    end = time.time()
+    print("TIME: ",(end-start))
+

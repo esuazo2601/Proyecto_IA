@@ -1,12 +1,11 @@
 import gymnasium as gym
-from A_star import A_star, get_instructions
-import time as t
+from DFS import dfs, get_instructions
 import matplotlib.pyplot as plt
 from gymnasium.envs.toy_text.frozen_lake import generate_random_map
 import time
 
-def run_a_star_on_frozenlake(episodes):
-    rewards = []
+def run_dfs_on_frozenlake(episodes):
+    rewards_per_episode = []
     start_time = time.time()
 
     for episode in range(episodes):
@@ -27,44 +26,41 @@ def run_a_star_on_frozenlake(episodes):
                 elif cell == 'G':
                     end = (row_idx, col_idx)
 
-        # Ejecución de A*
-        path = A_star(level_matrix, start, end)
+        # Ejecución de DFS
+        path = dfs(level_matrix, start, end)
         steps = get_instructions(path)
 
         done = False
-        score = 0
         state, info = env.reset()
+        score = 0
+
         while not done:
             for action in steps:
                 state, reward, done, truncated, info = env.step(action)
                 score += reward
                 if done:
                     break
-        rewards.append(score)
+
+        rewards_per_episode.append(score)
         env.close()
 
     end_time = time.time()
 
     # Mostrar resultados
     print("TOTAL TIME FROZEN:", (end_time - start_time))
-    #print("Recompensas por episodio:", rewards)
+    #print("Recompensas por episodio:", rewards_per_episode)
 
     # Graficar recompensas
-    # plt.plot(rewards)
+    # plt.plot(rewards_per_episode)
     # plt.xlabel('Episodios')
     # plt.ylabel('Recompensas Acumuladas')
     # plt.title('Recompensas Acumuladas en FrozenLake')
-    # plt.savefig('frozen_ASTAR_slippery.png')
+    # plt.savefig('frozen_dfs_slippery.png')
     # plt.show()
-
-    # if path:
-    #     print("Camino encontrado A STAR:", path)
-    # else:
-    #     print("No se encontró camino.")
 
 def main():
     episodes = 100  # Número de iteraciones a ejecutar
-    run_a_star_on_frozenlake(episodes)
+    run_dfs_on_frozenlake(episodes)
 
 if __name__ == '__main__':
     main()
