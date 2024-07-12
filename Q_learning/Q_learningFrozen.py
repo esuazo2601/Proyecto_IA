@@ -43,11 +43,16 @@ def run(episodes):
             # Modificar la recompensa según las nuevas reglas
             if next_state == goal_state:
                 reward = 1  # Llegó a la meta
+                print(f'Episodio {episode} ha encontrado la meta.')
                 terminated = True  # Terminar el episodio al llegar a la meta
             elif terminated:
                 reward = -1  # Cayó en un agujero
             else:
-                reward = 0  # Se movió sobre terreno congelado
+                reward = -0.1  # Penalización por moverse
+
+            # Penalizar si el agente se queda en el mismo estado
+            if next_state == state:
+                reward -= 1  # Penalización más alta por quedarse quieto
 
             total_reward += reward
 
