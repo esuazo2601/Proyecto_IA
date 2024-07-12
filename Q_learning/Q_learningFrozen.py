@@ -22,8 +22,8 @@ def run(episodes):
     alpha = 0.9  # Tasa de aprendizaje
     gamma = 0.9  # Tasa de descuento
     epsilon = 1.0  # Valor inicial de epsilon para la estrategia epsilon-greedy
-    epsilon_decay = 0.001  # Tasa de decaimiento de epsilon
-    min_epsilon = 0.05  # Probabilidad mínima de exploración
+    epsilon_decay = 0.0001  # Tasa de decaimiento de epsilon
+    min_epsilon = 0.1  # Probabilidad mínima de exploración
 
     rewards_per_episode = np.zeros(episodes)
     goal_state = 63  # Estado objetivo para una cuadrícula de 8x8
