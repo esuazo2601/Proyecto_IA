@@ -12,14 +12,15 @@ de estos algoritmos implementados para evaluar su eficiencia.
 
 * Preliminarmente se tiene pensado implementar y comparar los algoritmos:
 
-Búsqueda no informada: BFS y DFS.
-Búsqueda informada: A* y UCS. 
+Búsqueda no informada: DFS.
+Búsqueda informada: A*. 
 Aprendizaje por refuerzo: Q-Learning.
 
 ## Caracterización del problema a resolver
 ### Descripción del ambiente:
 
-* Se trata de un ambiente observable, determinístico, secuencial, estático, discreto y de agente singular.
+* Frozen Lake: Se trata de un ambiente observable, determinístico, secuencial, estático, discreto y de agente singular.
+* Taxi: Ambiente observable, no determinista, secuencial, discreto, de agente singular y estático
 
 ### Representación del estado del juego
 
@@ -48,7 +49,20 @@ el caracter 'S' representa el inicio, la 'F' representa espacio caminable , la '
 
 Además se cuenta con una variable Score que cambia de 0 a 1 al llegar a la casilla final.
 
-### Acciones que puede tomar el agente
+* En el caso del ambiente de Taxi, se representa de la siguiente manera:
+```
+    +---------+
+    |R: | : :G|
+    | : | : : |
+    | : : : : |
+    | | : | : |
+    |Y| : |B: |
+    +---------+
+```
+Además se cuenta con una variable reward, que retorna -1 al moverse, +20 por dejar un pasajero y -10 por ejecutar las acciones de recojer o dejar pasajero en un lugar no permitido.
+
+
+### Acciones que puede tomar el agente en Frozen Lake
 
 * El espacio de acciones del agente se representa en un array de numeros enteros desde el 0 al 3, es decir en cada paso tomará la decisión
 de una de estas 4 acciones (es discreto). Estas representan lo siguiente:
@@ -56,3 +70,11 @@ de una de estas 4 acciones (es discreto). Estas representan lo siguiente:
 ```
 0 : Moverse a la izquierda, 1 : Moverse abajo, 2 : Moverse a la derecha, 3 : Moverse arriba
 ```
+
+
+### Acciones que puede tomar el agente en Taxi
+
+* El espacio de acciones del agente se representa en un array de numeros enteros desde el 0 al 5, es decir en cada paso tomará la decisión.
+
+```
+0 : Moverse abajo, 1 : Moverse arriba, 2 : Moverse a la derecha, 3 : Moverse izquierda, 4: Recojer pasajero, 5: Dejar pasajero
