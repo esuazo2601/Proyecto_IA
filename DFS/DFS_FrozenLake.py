@@ -3,8 +3,11 @@ from DFS import dfs, get_instructions
 import matplotlib.pyplot as plt
 from gymnasium.envs.toy_text.frozen_lake import generate_random_map
 import time
+# Recompensa global de los episodios
+TotalRecom = 0 
 
 def run_dfs_on_frozenlake(episodes):
+    global TotalRecom
     rewards_per_episode = []
     start_time = time.time()
 
@@ -38,6 +41,11 @@ def run_dfs_on_frozenlake(episodes):
             for action in steps:
                 state, reward, done, truncated, info = env.step(action)
                 score += reward
+                if reward == 0 and not done:
+                    reward = -1
+                score += reward
+                TotalRecom += reward
+
                 if done:
                     break
 
@@ -48,6 +56,7 @@ def run_dfs_on_frozenlake(episodes):
 
     # Mostrar resultados
     print("TOTAL TIME FROZEN:", (end_time - start_time))
+    print("Recompensa global", (TotalRecom/episodes))
     #print("Recompensas por episodio:", rewards_per_episode)
 
     # Graficar recompensas
