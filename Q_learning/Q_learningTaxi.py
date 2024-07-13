@@ -21,8 +21,8 @@ def run(episodes):
     global TotalRecom
     env = gym.make('Taxi-v3', render_mode=None)
 
-    alpha = 0.9 # alpha or learning rate
-    gamma = 0.9 # gamma or discount rate. Near 0: more weight/reward placed on immediate state. Near 1: more on future state.
+    alpha = 0.9 # learning rate
+    gamma = 0.9 # gamma
     epsilon = 1 # 1 = 100% random actions
     epsilon_decay = 0.001  # epsilon decay rate
     min_epsilon = 0.05  # Probabilidad de exploración mínima
