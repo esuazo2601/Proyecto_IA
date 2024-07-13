@@ -4,7 +4,8 @@ import random
 import matplotlib.pyplot as plt
 from gymnasium.envs.toy_text.frozen_lake import generate_random_map
 import time
-
+# Variable global para registrar la recompensa global
+TotalRecom = 0
 # Inicializar la tabla Q con ceros
 Q = np.zeros((100*100, 4))
 
@@ -16,7 +17,7 @@ def choose_action(state, epsilon):
         return np.argmax(Q[state,:])  # Explotación: elegir la mejor acción
 
 def run(episodes):
-
+    global TotalRecom
     env = gym.make('FrozenLake-v1', desc = generate_random_map(size=100), is_slippery=True, render_mode=None)
 
     alpha = 0.9  # Tasa de aprendizaje
@@ -26,7 +27,7 @@ def run(episodes):
     min_epsilon = 0.1  # Probabilidad mínima de exploración
 
     rewards_per_episode = np.zeros(episodes)
-    goal_state = 63  # Estado objetivo para una cuadrícula de 8x8
+    goal_state = 9999  # Estado objetivo para una cuadrícula de 100x100
 
 
     start = time.time()
@@ -55,6 +56,7 @@ def run(episodes):
                 reward -= 1  # Penalización más alta por quedarse quieto
 
             total_reward += reward
+            TotalRecom += reward
 
             next_action = np.max(Q[next_state,:])
             Q[state, action] += alpha * (reward + gamma * next_action - Q[state, action])
@@ -68,6 +70,7 @@ def run(episodes):
 
     end = time.time()
     print("TOTAL TIME FROZEN", (end-start))
+    print("Recompensa global", (TotalRecom/episodes))
 
     # Calcular recompensas acumuladas para los últimos 100 episodios
     sum_rewards = np.zeros(episodes)
