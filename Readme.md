@@ -3,6 +3,11 @@
 * Linna Cao 
 * Patricio Covarrubias 
 * Esteban Suazo
+# Requisitos para ejecutar:
+* Python versión 3.12
+```
+pip install gymnasium[toy-text] matplotlib numpy pygame
+```
 
 ## ¿En qúe consiste el proyecto?
 * Consistirá en el uso de varios algoritmos de búsqueda y de aprendizaje por refuerzo, 
