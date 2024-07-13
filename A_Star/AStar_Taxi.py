@@ -3,14 +3,17 @@ import gymnasium as gym
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+# Recompensa global de los episodios
+TotalRecom = 0
 
 def manhattan_distance(start, goal):
     return abs(start[0] - goal[0]) + abs(start[1] - goal[1])
 
 def a_star(env, start_state):
+    global TotalRecom
     taxi_row, taxi_col, passenger, dest = env.unwrapped.decode(start_state)
 
-    # Priority queue for A* (cost, current state, path, passenger picked)
+    # Priority queue para A*
     priority_queue = []
     heapq.heappush(priority_queue, (0, start_state, [], False))
 
