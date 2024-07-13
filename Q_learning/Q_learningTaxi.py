@@ -3,7 +3,8 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 import time
-
+# Recompensa global de los episodios
+TotalRecom = 0
 # Espacio de observación = 500
 # 6 acciones posibles (arriba, abajo, izquierda, derecha, pickup, drop)
 # Las recompensas y termino de están definidas en la documentación de gymnasium 
@@ -17,7 +18,7 @@ def choose_action(state, epsilon):
         return np.argmax(Q[state,:])  # Explotación: elegir la mejor acción
 
 def run(episodes):
-
+    global TotalRecom
     env = gym.make('Taxi-v3', render_mode=None)
 
     alpha = 0.9 # alpha or learning rate
@@ -43,6 +44,7 @@ def run(episodes):
             next_state, reward, terminated, truncated, _  = env.step(action)
             
             total_reward += reward
+            TotalRecom += reward
 
             next_action = np.max(Q[next_state,:])
 
@@ -53,7 +55,7 @@ def run(episodes):
         rewards_per_episode[episode] = total_reward
 
     env.close()
-
+    print("Recompensa global", (TotalRecom/episodes))
     # sum_rewards = np.zeros(episodes)
     # for t in range(episodes):
     #     sum_rewards[t] = np.sum(rewards_per_episode[max(0, t-100):(t+1)])
